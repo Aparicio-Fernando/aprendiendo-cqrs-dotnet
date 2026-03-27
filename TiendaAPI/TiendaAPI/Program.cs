@@ -1,4 +1,8 @@
+using TiendaAPI.Servicios;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
 
 // Registra los controladores
 builder.Services.AddControllers();
