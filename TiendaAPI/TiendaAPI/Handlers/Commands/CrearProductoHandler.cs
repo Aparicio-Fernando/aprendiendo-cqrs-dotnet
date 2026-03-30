@@ -1,8 +1,9 @@
 ﻿using TiendaAPI.Commands.Productos;
+using TiendaAPI.Interfaces;
 
 namespace TiendaAPI.Handlers.Commands
 {
-    public class CrearProductoHandler
+    public class CrearProductoHandler : ICommandHandler<CrearProductoCommand>
     {
         // Lista en memoria — después la reemplazamos con base de datos
         public static List<string> _productos = new List<string>
@@ -10,10 +11,19 @@ namespace TiendaAPI.Handlers.Commands
             "Laptop", "Mouse", "Teclado"
         };
 
-        public string Handle(CrearProductoCommand commnand)
+        public async Task<string> Handle(CrearProductoCommand command)
         {
-            _productos.Add(commnand.Nombre);
-            return $"Producto '{commnand.Nombre}' creado correctamente";
+            // Simulamos una operación async (después será base de datos real)
+            await Task.Delay(1);
+
+            if (string.IsNullOrWhiteSpace(command.Nombre))
+                return "Error: el nombre del producto no puede estar vacío";
+
+            if (command.Precio <= 0)
+                return "Error: el precio dene ser mayor a cero";
+
+            _productos.Add(command.Nombre);
+            return $"Producto '{command.Nombre}' creado correctamente";
         }
     }
 }
