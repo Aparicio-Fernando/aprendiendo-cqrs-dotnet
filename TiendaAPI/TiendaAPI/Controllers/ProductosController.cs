@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TiendaAPI.Commands.Productos;
+using TiendaAPI.Handlers.Commands;
+using TiendaAPI.Handlers.Queries;
+using TiendaAPI.Queries.Productos;
 using TiendaAPI.Servicios;
 
 namespace TiendaAPI.Controllers
@@ -7,39 +11,46 @@ namespace TiendaAPI.Controllers
     [Route("api/[controller]")]
     public class ProductosController : ControllerBase
     {
-        private readonly IProductoServicio _servicio;
+        private readonly CrearProductoHandler _crearHandler;
+        private readonly ObtenerProductosHandler _obtenerHandler;
 
-        public ProductosController(IProductoServicio servicio)
+        public ProductosController(
+            CrearProductoHandler crearHandler,
+            ObtenerProductosHandler obtenerHandler)
         {
-            _servicio = servicio;
+            _crearHandler = crearHandler;
+            _obtenerHandler = obtenerHandler;
         }
 
         //GET api/productos
         [HttpGet]
         public IActionResult ObtenerTodos()
         {
-           return Ok(_servicio.ObtenerTodos());
+            var query = new ObtenerProductosQuery();
+            var resultado = _obtenerHandler.Handle(query);
+            return Ok(resultado);
         }
 
         //GET api/productos/5
-        [HttpGet("{id}")]
-        public IActionResult ObtenerPorId(int id)
-        {
-            return Ok(_servicio.ObtenerPorId(id));
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult ObtenerPorId(int id)
+        //{
+        //    return Ok(_servicio.ObtenerPorId(id));
+        //}
 
         //POST api/productos
         [HttpPost]
-        public IActionResult Crear([FromBody] string nombre)
+        public IActionResult Crear([FromBody] CrearProductoCommand command)
         {
-            return Ok(_servicio.Crear(nombre));
+            var resultado = _crearHandler.Handle(command);
+            return Ok(resultado);
         }
 
         //DELETE api/productos/5
-        [HttpDelete("{id}")]
-        public IActionResult Eliminar(int id)
-        {
-            return Ok(_servicio.Eliminar(id));
-        }
+        //[HttpDelete("{id}")]
+        //public IActionResult Eliminar(int id)
+        //{
+        //    return Ok(_servicio.Eliminar(id));
+        //}
     }
 }

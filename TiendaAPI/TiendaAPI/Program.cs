@@ -1,8 +1,12 @@
+using TiendaAPI.Handlers.Commands;
+using TiendaAPI.Handlers.Queries;
 using TiendaAPI.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
+builder.Services.AddScoped<CrearProductoHandler>();
+builder.Services.AddScoped<ObtenerProductosHandler>();
 
 // Registra los controladores
 builder.Services.AddControllers();
