@@ -2,6 +2,7 @@
 using TiendaAPI.Commands.Productos;
 using TiendaAPI.Handlers.Commands;
 using TiendaAPI.Handlers.Queries;
+using TiendaAPI.Interfaces;
 using TiendaAPI.Queries.Productos;
 using TiendaAPI.Servicios;
 
@@ -11,46 +12,38 @@ namespace TiendaAPI.Controllers
     [Route("api/[controller]")]
     public class ProductosController : ControllerBase
     {
-        private readonly CrearProductoHandler _crearHandler;
-        private readonly ObtenerProductosHandler _obtenerHandler;
+        private readonly ICommandHandler<CrearProductoCommand> _crearHandler;
+        private readonly IQueryHandler<ObtenerProductosQuery, List<string>> _obtenerHandler;
 
         public ProductosController(
-            CrearProductoHandler crearHandler,
-            ObtenerProductosHandler obtenerHandler)
+            ICommandHandler<CrearProductoCommand> crearHandler,
+            IQueryHandler<ObtenerProductosQuery, List<string>> obtenerHandler)
         {
             _crearHandler = crearHandler;
             _obtenerHandler = obtenerHandler;
         }
 
-        //GET api/productos
+        /// <summary>
+        /// Obtiene todos los productos
+        /// </summary>
         [HttpGet]
-        public IActionResult ObtenerTodos()
+        public async Task<IActionResult> ObtenerTodos()
         {
             var query = new ObtenerProductosQuery();
-            var resultado = _obtenerHandler.Handle(query);
+            var resultado = await  _obtenerHandler.Handle(query);
             return Ok(resultado);
         }
 
-        //GET api/productos/5
-        //[HttpGet("{id}")]
-        //public IActionResult ObtenerPorId(int id)
-        //{
-        //    return Ok(_servicio.ObtenerPorId(id));
-        //}
-
-        //POST api/productos
+        /// <summary>
+        /// carga producto
+        /// </summary>    
         [HttpPost]
-        public IActionResult Crear([FromBody] CrearProductoCommand command)
+        public async Task<IActionResult> Crear([FromBody] CrearProductoCommand command)
         {
-            var resultado = _crearHandler.Handle(command);
+            var resultado = await _crearHandler.Handle(command);
             return Ok(resultado);
         }
 
-        //DELETE api/productos/5
-        //[HttpDelete("{id}")]
-        //public IActionResult Eliminar(int id)
-        //{
-        //    return Ok(_servicio.Eliminar(id));
-        //}
+        
     }
 }
