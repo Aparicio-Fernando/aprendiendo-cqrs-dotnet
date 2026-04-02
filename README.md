@@ -11,5 +11,6 @@ Este repositorio contiene todo mi progreso aprendiendo el patrón CQRS en .NET.
 - [x] Sesión 3 — Inyección de dependencias
 - [x] Sesión 4 — ¿Qué es CQRS?
 - [x] Sesión 5 — Commands: escribir datos
-- [ ] Sesión 6 — Queries: leer datos
-- [ ] Sesión 7 — MediatR
+- [x] Sesión 6 — Queries: leer datos
+- [x] Sesión 7 — MediatR
+- [x] Sesión 8 — Entity Framework Core
