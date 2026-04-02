@@ -12,3 +12,4 @@ Este repositorio contiene todo mi progreso aprendiendo el patrón CQRS en .NET.
 - [x] Sesión 4 — ¿Qué es CQRS?
 - [x] Sesión 5 — Commands: escribir datos
 - [ ] Sesión 6 — Queries: leer datos
+- [ ] Sesión 7 — MediatR
