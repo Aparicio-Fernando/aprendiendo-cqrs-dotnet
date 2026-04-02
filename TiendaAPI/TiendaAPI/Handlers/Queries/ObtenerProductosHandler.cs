@@ -1,11 +1,12 @@
-﻿using TiendaAPI.DTOs;
+﻿using MediatR;
+using TiendaAPI.DTOs;
 using TiendaAPI.Entities;
 using TiendaAPI.Interfaces;
 using TiendaAPI.Queries.Productos;
 
 namespace TiendaAPI.Handlers.Queries
 {
-    public class ObtenerProductosHandler : IQueryHandler<ObtenerProductosQuery, List<ProductoDto>>
+    public class ObtenerProductosHandler : IRequestHandler<ObtenerProductosQuery, List<ProductoDto>>
     {
         // Lista compartida — en Sesión 8 será la base de datos real
         public static List<Producto> _productos = new List<Producto>
@@ -15,9 +16,9 @@ namespace TiendaAPI.Handlers.Queries
             new Producto { Id = 3, Nombre = "Teclado", Precio = 45 }
         };
 
-        public async Task<List<ProductoDto>> Handle(ObtenerProductosQuery query)
+        public async Task<List<ProductoDto>> Handle(ObtenerProductosQuery query, CancellationToken cancellationToken)
         {
-            await Task.Delay(1);
+            await Task.Delay(1, cancellationToken);
 
             // Mapeamos cada Producto a ProductoDto
             var dtos = _productos
