@@ -1,6 +1,10 @@
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TareasAPI.Behaviors;
 using TareasAPI.Data;
 using TareasAPI.Handlers.Command;
+using TareasAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,9 @@ builder.Services.AddDbContext<TareasDbContext>(options =>
 // Registrar MediatR
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CrearTareaHandler).Assembly));
+
+builder.Services.AddValidatorsFromAssemblyContaining<CrearTareaValidator>();
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 var app = builder.Build();
 

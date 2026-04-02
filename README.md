@@ -2,18 +2,18 @@
 
 ## Mi camino de aprendizaje
 
-Este repositorio contiene todo mi progreso aprendiendo el patrón CQRS en .NET.
+Este repositorio contiene todo mi progreso aprendiendo el patrÃ³n CQRS en .NET.
 
 ## Sesiones
-- [x] Sesión 0 — Setup de GitHub
-- [x] Sesión 1 — Fundamentos de C#
-- [x] Sesión 2 — Primera Web API
-- [x] Sesión 3 — Inyección de dependencias
-- [x] Sesión 4 — ¿Qué es CQRS?
-- [x] Sesión 5 — Commands: escribir datos
-- [x] Sesión 6 — Queries: leer datos
-- [x] Sesión 7 — MediatR
-- [x] Sesión 8 — Entity Framework Core
-- [x] Sesión 9 — Proyecto integrador
-- [x] Sesión 10 — FluentValidation y Pipeline Behaviors
-- [ ] 
+- [x] SesiÃ³n 0 â€” Setup de GitHub
+- [x] SesiÃ³n 1 â€” Fundamentos de C#
+- [x] SesiÃ³n 2 â€” Primera Web API
+- [x] SesiÃ³n 3 â€” InyecciÃ³n de dependencias
+- [x] SesiÃ³n 4 â€” Â¿QuÃ© es CQRS?
+- [x] SesiÃ³n 5 â€” Commands: escribir datos
+- [x] SesiÃ³n 6 â€” Queries: leer datos
+- [x] SesiÃ³n 7 â€” MediatR
+- [x] SesiÃ³n 8 â€” Entity Framework Core
+- [x] SesiÃ³n 9 â€” Proyecto integrador
+- [x] SesiÃ³n 10 â€” FluentValidation y Pipeline Behaviors
+- [ 
