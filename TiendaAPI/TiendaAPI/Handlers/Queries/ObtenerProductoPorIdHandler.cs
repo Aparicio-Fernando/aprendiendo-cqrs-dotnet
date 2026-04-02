@@ -1,14 +1,15 @@
-﻿using TiendaAPI.DTOs;
+﻿using MediatR;
+using TiendaAPI.DTOs;
 using TiendaAPI.Interfaces;
 using TiendaAPI.Queries.Productos;
 
 namespace TiendaAPI.Handlers.Queries
 {
-    public class ObtenerProductoPorIdHandler : IQueryHandler<ObtenerProductoPorIdQuery, ProductoDto?>
+    public class ObtenerProductoPorIdHandler : IRequestHandler<ObtenerProductoPorIdQuery, ProductoDto?>
     {
-        public async Task<ProductoDto?> Handle(ObtenerProductoPorIdQuery query)
+        public async Task<ProductoDto?> Handle(ObtenerProductoPorIdQuery query, CancellationToken cancellationToken)
         {
-            await Task.Delay(1);
+            await Task.Delay(1, cancellationToken);
 
             // Mapeamos Producto a ProductoDto
             var producto = ObtenerProductosHandler._productos

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using TiendaAPI.Commands.Productos;
 using TiendaAPI.DTOs;
 using TiendaAPI.Interfaces;
@@ -10,19 +11,13 @@ namespace TiendaAPI.Controllers
     [Route("api/[controller]")]
     public class ProductosController : ControllerBase
     {
-        private readonly ICommandHandler<CrearProductoCommand> _crearHandler;
-        private readonly IQueryHandler<ObtenerProductosQuery, List<ProductoDto>> _obtenerHandler;
-        private readonly IQueryHandler<ObtenerProductoPorIdQuery, ProductoDto?> _obtenerPorIdHandler;
+        private readonly IMediator _mediator;
 
-        public ProductosController(
-            ICommandHandler<CrearProductoCommand> crearHandler,
-            IQueryHandler<ObtenerProductosQuery, List<ProductoDto>> obtenerHandler,
-            IQueryHandler<ObtenerProductoPorIdQuery, ProductoDto?> obtenerPorIdHandler)
+        // Un solo IMediator reemplaza todos los Handlers del constructor
+        public ProductosController(IMediator mediator)
 
         {
-            _crearHandler = crearHandler;
-            _obtenerHandler = obtenerHandler;
-            _obtenerPorIdHandler = obtenerPorIdHandler;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -32,7 +27,7 @@ namespace TiendaAPI.Controllers
         public async Task<IActionResult> ObtenerTodos()
         {
             var query = new ObtenerProductosQuery();
-            var resultado = await _obtenerHandler.Handle(query);
+            var resultado = await _mediator.Send(query);
             return Ok(resultado);
         }
 
@@ -40,7 +35,7 @@ namespace TiendaAPI.Controllers
         public async Task<IActionResult> ObtenerPorId(int id)
         {
             var query = new ObtenerProductoPorIdQuery(id);
-            var resultado = await _obtenerPorIdHandler.Handle(query);
+            var resultado = await _mediator.Send(query);
 
             if (resultado is null)
                 return NotFound($"Producto con Id {id} no encontrado");
@@ -53,7 +48,7 @@ namespace TiendaAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Crear([FromBody] CrearProductoCommand command)
         {
-            var resultado = await _crearHandler.Handle(command);
+            var resultado = await _mediator.Send(command);
             return Ok(resultado);
         }
 

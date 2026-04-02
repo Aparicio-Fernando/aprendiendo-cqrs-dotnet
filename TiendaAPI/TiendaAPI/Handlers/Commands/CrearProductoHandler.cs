@@ -1,15 +1,16 @@
-﻿using TiendaAPI.Commands.Productos;
+﻿using MediatR;
+using TiendaAPI.Commands.Productos;
 using TiendaAPI.Handlers.Queries;
 using TiendaAPI.Interfaces;
 
 namespace TiendaAPI.Handlers.Commands
 {
-    public class CrearProductoHandler : ICommandHandler<CrearProductoCommand>
+    public class CrearProductoHandler : IRequestHandler<CrearProductoCommand, string>
     {        
-        public async Task<string> Handle(CrearProductoCommand command)
+        public async Task<string> Handle(CrearProductoCommand command, CancellationToken cancellationToken)
         {
             // Simulamos una operación async (después será base de datos real)            
-            await Task.Delay(1);
+            await Task.Delay(1, cancellationToken);
 
             if (string.IsNullOrWhiteSpace(command.Nombre))
                 return "Error: el nombre del producto no puede estar vacío";
