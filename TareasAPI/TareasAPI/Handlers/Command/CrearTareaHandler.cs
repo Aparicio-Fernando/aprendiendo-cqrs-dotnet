@@ -15,13 +15,7 @@ namespace TareasAPI.Handlers.Command
         }
 
         public async Task<string> Handle(CrearTareaCommand command, CancellationToken cancellationToken)
-        {
-            if (string.IsNullOrWhiteSpace(command.Titulo))
-                return "Error: el título de la tarea no puede estar vacío";
-
-            if (string.IsNullOrWhiteSpace(command.Descripcion))
-                return "Error: la descripción de la tarea no puede estar vacío";
-
+        {            
             var tarea = new Tarea
             {
                 Titulo = command.Titulo,
