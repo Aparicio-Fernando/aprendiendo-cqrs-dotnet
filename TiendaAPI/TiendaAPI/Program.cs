@@ -8,21 +8,16 @@ using TiendaAPI.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
-
-builder.Services.AddScoped<ICommandHandler<CrearProductoCommand>, CrearProductoHandler>();
-builder.Services.AddScoped<IQueryHandler<ObtenerProductosQuery, List<ProductoDto>>, ObtenerProductosHandler>();
-builder.Services.AddScoped<IQueryHandler<ObtenerProductoPorIdQuery, ProductoDto?>, ObtenerProductoPorIdHandler>();
-
-
 // Registra los controladores
 builder.Services.AddControllers();
+
+// Una sola línea registra todos los Handlers automáticamente
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(CrearProductoHandler).Assembly));
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
 // Mapea las rutas de los controladores
 app.MapControllers();
-
 app.Run();
