@@ -16,3 +16,4 @@ Este repositorio contiene todo mi progreso aprendiendo el patrón CQRS en .NET.
 - [x] Sesión 8 — Entity Framework Core
 - [x] Sesión 9 — Proyecto integrador
 - [x] Sesión 10 — FluentValidation y Pipeline Behaviors
+- [ ] 
