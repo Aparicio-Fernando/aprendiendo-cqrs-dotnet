@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TiendaAPI.Commands.Productos;
-using TiendaAPI.Handlers.Commands;
-using TiendaAPI.Handlers.Queries;
+using TiendaAPI.DTOs;
 using TiendaAPI.Interfaces;
 using TiendaAPI.Queries.Productos;
-using TiendaAPI.Servicios;
 
 namespace TiendaAPI.Controllers
 {
@@ -13,14 +11,18 @@ namespace TiendaAPI.Controllers
     public class ProductosController : ControllerBase
     {
         private readonly ICommandHandler<CrearProductoCommand> _crearHandler;
-        private readonly IQueryHandler<ObtenerProductosQuery, List<string>> _obtenerHandler;
+        private readonly IQueryHandler<ObtenerProductosQuery, List<ProductoDto>> _obtenerHandler;
+        private readonly IQueryHandler<ObtenerProductoPorIdQuery, ProductoDto?> _obtenerPorIdHandler;
 
         public ProductosController(
             ICommandHandler<CrearProductoCommand> crearHandler,
-            IQueryHandler<ObtenerProductosQuery, List<string>> obtenerHandler)
+            IQueryHandler<ObtenerProductosQuery, List<ProductoDto>> obtenerHandler,
+            IQueryHandler<ObtenerProductoPorIdQuery, ProductoDto?> obtenerPorIdHandler)
+
         {
             _crearHandler = crearHandler;
             _obtenerHandler = obtenerHandler;
+            _obtenerPorIdHandler = obtenerPorIdHandler;
         }
 
         /// <summary>
@@ -30,10 +32,21 @@ namespace TiendaAPI.Controllers
         public async Task<IActionResult> ObtenerTodos()
         {
             var query = new ObtenerProductosQuery();
-            var resultado = await  _obtenerHandler.Handle(query);
+            var resultado = await _obtenerHandler.Handle(query);
             return Ok(resultado);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObtenerPorId(int id)
+        {
+            var query = new ObtenerProductoPorIdQuery(id);
+            var resultado = await _obtenerPorIdHandler.Handle(query);
+
+            if (resultado is null)
+                return NotFound($"Producto con Id {id} no encontrado");
+
+            return Ok(resultado);
+        }
         /// <summary>
         /// carga producto
         /// </summary>    
@@ -44,6 +57,6 @@ namespace TiendaAPI.Controllers
             return Ok(resultado);
         }
 
-        
+
     }
 }
